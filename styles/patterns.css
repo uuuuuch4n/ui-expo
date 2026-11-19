@@ -1,0 +1,547 @@
+/* ==========================================================================
+   Reusable Hover & Expandable Menu UI Patterns
+   - Works with hover, keyboard focus, click/tap (.is-open), and .is-pinned
+   ========================================================================== */
+
+/* Shared trigger button */
+.ui-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-on-accent);
+  background: var(--accent);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 140ms ease, transform 120ms ease;
+}
+
+.ui-btn:hover {
+  background: var(--accent-hover);
+}
+
+.ui-btn--ghost {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border-color: var(--border);
+}
+
+.ui-btn--ghost:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+.ui-btn--sm {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.ui-caret {
+  width: 14px;
+  height: 14px;
+  transition: transform 160ms var(--ease-out);
+}
+
+.ui-menu-root.is-open > .ui-btn .ui-caret,
+.ui-menu-root.is-pinned > .ui-btn .ui-caret {
+  transform: rotate(180deg);
+}
+
+/* Shared menu item */
+.ui-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 13.5px;
+  color: var(--text-primary);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.ui-item:hover,
+.ui-item:focus-visible {
+  background: var(--bg-hover);
+  outline: none;
+}
+
+.ui-item__kbd {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.ui-item--danger {
+  color: var(--danger);
+}
+
+.ui-item--danger:hover,
+.ui-item--danger:focus-visible {
+  background: var(--danger-soft);
+}
+
+.ui-divider {
+  height: 1px;
+  margin: 5px 6px;
+  background: var(--border);
+  border: 0;
+}
+
+/* ==========================================================================
+   1. Dropdown Menu (.ui-dropdown)
+   ========================================================================== */
+.ui-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.ui-dropdown__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  padding-top: 8px; /* Hover bridge */
+  min-width: 220px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 150ms ease, transform 160ms var(--ease-out), visibility 150ms ease;
+}
+
+.ui-dropdown.is-open > .ui-dropdown__panel,
+.ui-dropdown.is-pinned > .ui-dropdown__panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.ui-dropdown__surface {
+  padding: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ==========================================================================
+   2. Mega Menu (.ui-mega)
+   ========================================================================== */
+.ui-mega-bar {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.ui-mega-bar__brand {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-right: 12px;
+}
+
+.ui-mega-bar__link {
+  padding: 6px 10px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+
+.ui-mega-bar__link:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.ui-mega {
+  position: static;
+}
+
+.ui-mega__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding-top: 10px; /* Hover bridge */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 160ms ease, transform 180ms var(--ease-out), visibility 160ms ease;
+}
+
+.ui-mega.is-open > .ui-mega__panel,
+.ui-mega.is-pinned > .ui-mega__panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.ui-mega__surface {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.ui-mega__heading {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ui-mega__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ui-mega__list a {
+  display: block;
+  padding: 6px 8px;
+  margin: 0 -8px;
+  font-size: 13.5px;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 120ms ease;
+}
+
+.ui-mega__list a:hover {
+  background: var(--bg-hover);
+}
+
+.ui-mega__feature {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px;
+  background: var(--bg-stage);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.ui-mega__feature-title {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.ui-mega__feature-copy {
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 640px) {
+  .ui-mega__surface {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   3. Flyout Menu (.ui-flyout)
+   ========================================================================== */
+.ui-flyout {
+  position: relative;
+  display: inline-block;
+}
+
+.ui-flyout__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  padding-top: 8px;
+  min-width: 210px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 150ms ease, transform 160ms var(--ease-out), visibility 150ms ease;
+}
+
+.ui-flyout.is-open > .ui-flyout__panel,
+.ui-flyout.is-pinned > .ui-flyout__panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.ui-flyout__surface {
+  padding: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.ui-flyout__branch {
+  position: relative;
+}
+
+.ui-flyout__subpanel {
+  position: absolute;
+  top: -6px;
+  left: 100%;
+  z-index: 25;
+  padding-left: 8px; /* Horizontal hover bridge */
+  min-width: 190px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-6px);
+  transition: opacity 140ms ease, transform 160ms var(--ease-out), visibility 140ms ease;
+}
+
+.ui-flyout__branch.is-sub-open > .ui-flyout__subpanel,
+.ui-flyout.is-pinned .ui-flyout__branch[data-default-pin] > .ui-flyout__subpanel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.ui-flyout__chevron {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   4. Popover (.ui-popover)
+   ========================================================================== */
+.ui-popover {
+  position: relative;
+  display: inline-block;
+}
+
+.ui-popover__panel {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 20;
+  padding-top: 10px; /* Hover bridge */
+  width: 290px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 6px);
+  transition: opacity 160ms ease, transform 180ms var(--ease-out), visibility 160ms ease;
+}
+
+.ui-popover.is-open > .ui-popover__panel,
+.ui-popover.is-pinned > .ui-popover__panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.ui-popover__surface {
+  position: relative;
+  padding: 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.ui-popover__surface::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.ui-popover__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.ui-popover__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ui-popover__price {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.ui-popover__body {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.ui-popover__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ui-popover__actions .ui-btn {
+  flex: 1;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   5. Speed Dial (.ui-speeddial)
+   ========================================================================== */
+.ui-speeddial {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.ui-speeddial__actions {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  z-index: 20;
+  padding-bottom: 12px; /* Hover bridge */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.ui-speeddial.is-open .ui-speeddial__actions,
+.ui-speeddial.is-pinned .ui-speeddial__actions {
+  pointer-events: auto;
+}
+
+.ui-speeddial__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px) scale(0.92);
+  transition: opacity 150ms ease, transform 180ms var(--ease-out);
+}
+
+.ui-speeddial.is-open .ui-speeddial__item,
+.ui-speeddial.is-pinned .ui-speeddial__item {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.ui-speeddial.is-open .ui-speeddial__item:nth-child(1),
+.ui-speeddial.is-pinned .ui-speeddial__item:nth-child(1) {
+  transition-delay: 60ms;
+}
+
+.ui-speeddial.is-open .ui-speeddial__item:nth-child(2),
+.ui-speeddial.is-pinned .ui-speeddial__item:nth-child(2) {
+  transition-delay: 30ms;
+}
+
+.ui-speeddial.is-open .ui-speeddial__item:nth-child(3),
+.ui-speeddial.is-pinned .ui-speeddial__item:nth-child(3) {
+  transition-delay: 0ms;
+}
+
+.ui-speeddial__label {
+  padding: 5px 10px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+
+.ui-speeddial__mini {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  transition: background-color 130ms ease, transform 130ms ease;
+}
+
+.ui-speeddial__item:hover .ui-speeddial__mini {
+  background: var(--bg-hover);
+  transform: scale(1.06);
+}
+
+.ui-speeddial__fab {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: var(--text-on-accent);
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  transition: background-color 140ms ease, transform 160ms var(--ease-out);
+}
+
+.ui-speeddial__fab:hover {
+  background: var(--accent-hover);
+}
+
+.ui-speeddial__plus {
+  font-size: 24px;
+  line-height: 1;
+  transition: transform 180ms var(--ease-out);
+}
+
+.ui-speeddial.is-open .ui-speeddial__plus,
+.ui-speeddial.is-pinned .ui-speeddial__plus {
+  transform: rotate(45deg);
+}

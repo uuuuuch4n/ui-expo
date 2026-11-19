@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI Expo — ホバーで展開するUIパターン集</title>
+  <meta name="description" content="UI Expo：ドロップダウンメニュー、メガメニュー、フライアウトメニュー、ポップオーバー、スピードダイアルの5種類を、ビルド不要のHTML/CSS/JavaScriptとアクセシビリティ対応でまとめたUI展示会。" />
+  <link rel="stylesheet" href="./styles/base.css" />
+  <link rel="stylesheet" href="./styles/patterns.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="#top" class="site-brand">
+        <span class="site-brand__title">UI Expo</span>
+        <span class="site-brand__tag">HTML / CSS / JS</span>
+      </a>
+      <nav class="site-nav" aria-label="パターン一覧">
+        <a href="#dropdown">ドロップダウン</a>
+        <a href="#mega">メガメニュー</a>
+        <a href="#flyout">フライアウト</a>
+        <a href="#popover">ポップオーバー</a>
+        <a href="#speeddial">スピードダイアル</a>
+      </nav>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="配色テーマを切り替え">ダーク表示</button>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <section class="hero">
+      <h1 class="hero__title">ホバーで中身が展開されるUIパターン集</h1>
+      <p class="hero__lead">
+        ボタンにカーソルを合わせると複数の項目やコンテンツが表示される代表的な5つのUIを、依存ライブラリなし（Vanilla HTML / CSS / JavaScript）で実装したショーケースです。ホバーだけでなくクリック・キーボード操作にも対応しています。
+      </p>
+      <ul class="hero__specs">
+        <li>ビルド不要・そのままコピー可能</li>
+        <li>ARIA / キーボード操作（↑↓←→ / Esc）対応</li>
+        <li>ホバーブリッジ &amp; 120msの遅延クローズ</li>
+        <li>タッチ端末向けクリックフォールバック</li>
+      </ul>
+    </section>
+
+    <!-- 01. Dropdown Menu -->
+    <section id="dropdown" class="specimen" aria-labelledby="dropdown-heading">
+      <div class="specimen__header">
+        <div>
+          <div class="specimen__meta">
+            <span class="specimen__index">01</span>
+            <h2 id="dropdown-heading" class="specimen__title">ドロップダウンメニュー</h2>
+            <span class="specimen__en">Dropdown Menu</span>
+          </div>
+          <p class="specimen__desc">最も一般的なUI。ボタンの下に縦1列のアクションやナビゲーション一覧を展開します。</p>
+        </div>
+        <div class="specimen__controls">
+          <label class="pin-label">
+            <input type="checkbox" data-pin-target="demo-dropdown" />
+            開いたまま固定
+          </label>
+        </div>
+      </div>
+
+      <div class="specimen__stage">
+        <div id="demo-dropdown" class="ui-dropdown ui-menu-root" data-menu-root>
+          <button type="button" class="ui-btn" data-menu-trigger aria-haspopup="menu" aria-expanded="false">
+            アカウント
+            <svg class="ui-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+          <div class="ui-dropdown__panel">
+            <div class="ui-dropdown__surface" role="menu" aria-label="アカウントメニュー">
+              <button type="button" class="ui-item" role="menuitem" data-demo-action="プロフィール編集">
+                <span>プロフィール編集</span>
+                <span class="ui-item__kbd">⌘P</span>
+              </button>
+              <button type="button" class="ui-item" role="menuitem" data-demo-action="通知設定">
+                <span>通知設定</span>
+                <span class="ui-item__kbd">⌘,</span>
+              </button>
+              <button type="button" class="ui-item" role="menuitem" data-demo-action="プランと請求">
+                <span>プランと請求</span>
+              </button>
+              <hr class="ui-divider" />
+              <button type="button" class="ui-item ui-item--danger" role="menuitem" data-demo-action="ログアウト">
+                <span>ログアウト</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <span class="specimen__hint">ホバー・クリック・↓キーで展開</span>
+      </div>
+
+      <div class="code-box" data-code-box="dropdown">
+        <div class="code-box__bar">
+          <div class="code-tabs">
+            <button type="button" class="code-tab is-active" data-lang="html">HTML</button>
+            <button type="button" class="code-tab" data-lang="css">CSS</button>
+            <button type="button" class="code-tab" data-lang="js">JS</button>
+          </div>
+          <div class="code-actions">
+            <button type="button" class="code-toggle">コードを見る</button>
+            <button type="button" class="copy-btn">コピー</button>
+          </div>
+        </div>
+        <pre class="code-box__body"><code></code></pre>
+      </div>
+    </section>
+
+    <!-- 02. Mega Menu -->
+    <section id="mega" class="specimen" aria-labelledby="mega-heading">
+      <div class="specimen__header">
+        <div>
+          <div class="specimen__meta">
+            <span class="specimen__index">02</span>
+            <h2 id="mega-heading" class="specimen__title">メガメニュー</h2>
+            <span class="specimen__en">Mega Menu</span>
+          </div>
+          <p class="specimen__desc">複数列のカテゴリや特集カードをまとめて展開。ECサイトやポータルのグローバルナビに適しています。</p>
+        </div>
+        <div class="specimen__controls">
+          <label class="pin-label">
+            <input type="checkbox" data-pin-target="demo-mega" />
+            開いたまま固定
+          </label>
+        </div>
+      </div>
+
+      <div class="specimen__stage">
+        <nav class="ui-mega-bar" aria-label="ショップナビゲーション例">
+          <span class="ui-mega-bar__brand">ATELIER</span>
+          <div id="demo-mega" class="ui-mega ui-menu-root" data-menu-root>
+            <button type="button" class="ui-btn ui-btn--sm" data-menu-trigger aria-haspopup="true" aria-expanded="false">
+              カテゴリ一覧
+              <svg class="ui-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+            <div class="ui-mega__panel">
+              <div class="ui-mega__surface">
+                <div>
+                  <h3 class="ui-mega__heading">デスク・PC</h3>
+                  <ul class="ui-mega__list">
+                    <li><a href="#mega" data-demo-action="カテゴリ: モニター">モニター</a></li>
+                    <li><a href="#mega" data-demo-action="カテゴリ: キーボード">キーボード</a></li>
+                    <li><a href="#mega" data-demo-action="カテゴリ: デスクライト">デスクライト</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="ui-mega__heading">生活雑貨</h3>
+                  <ul class="ui-mega__list">
+                    <li><a href="#mega" data-demo-action="カテゴリ: キッチン用品">キッチン用品</a></li>
+                    <li><a href="#mega" data-demo-action="カテゴリ: 収納グッズ">収納グッズ</a></li>
+                    <li><a href="#mega" data-demo-action="カテゴリ: ファブリック">ファブリック</a></li>
+                  </ul>
+                </div>
+                <div class="ui-mega__feature">
+                  <div>
+                    <p class="ui-mega__feature-title">季節の特集セール</p>
+                    <p class="ui-mega__feature-copy">デスク周りの定番アイテムが最大30%OFF。</p>
+                  </div>
+                  <button type="button" class="ui-btn ui-btn--sm" data-demo-action="特集セールを見る">特集を見る</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="#mega" class="ui-mega-bar__link" data-demo-action="ランキング">ランキング</a>
+          <a href="#mega" class="ui-mega-bar__link" data-demo-action="サポート">サポート</a>
+        </nav>
+        <span class="specimen__hint">「カテゴリ一覧」にホバーまたはクリック</span>
+      </div>
+
+      <div class="code-box" data-code-box="mega">
+        <div class="code-box__bar">
+          <div class="code-tabs">
+            <button type="button" class="code-tab is-active" data-lang="html">HTML</button>
+            <button type="button" class="code-tab" data-lang="css">CSS</button>
+            <button type="button" class="code-tab" data-lang="js">JS</button>
+          </div>
+          <div class="code-actions">
+            <button type="button" class="code-toggle">コードを見る</button>
+            <button type="button" class="copy-btn">コピー</button>
+          </div>
+        </div>
+        <pre class="code-box__body"><code></code></pre>
+      </div>
+    </section>
+
+    <!-- 03. Flyout Menu -->
+    <section id="flyout" class="specimen" aria-labelledby="flyout-heading">
+      <div class="specimen__header">
+        <div>
+          <div class="specimen__meta">
+            <span class="specimen__index">03</span>
+            <h2 id="flyout-heading" class="specimen__title">フライアウトメニュー</h2>
+            <span class="specimen__en">Flyout Menu</span>
+          </div>
+          <p class="specimen__desc">階層構造を持つメニュー。項目にカーソルを合わせる（または → キーを押す）と横方向にサブメニューが飛び出します。</p>
+        </div>
+        <div class="specimen__controls">
+          <label class="pin-label">
+            <input type="checkbox" data-pin-target="demo-flyout" />
+            開いたまま固定
+          </label>
+        </div>
+      </div>
+
+      <div class="specimen__stage specimen__stage--start">
+        <div id="demo-flyout" class="ui-flyout ui-menu-root" data-menu-root>
+          <button type="button" class="ui-btn" data-menu-trigger aria-haspopup="menu" aria-expanded="false">
+            ファイル操作
+            <svg class="ui-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+          <div class="ui-flyout__panel">
+            <div class="ui-flyout__surface" role="menu" aria-label="ファイル操作">
+              <button type="button" class="ui-item" role="menuitem" data-demo-action="新規作成">新規作成</button>
+              <div class="ui-flyout__branch" data-default-pin>
+                <button type="button" class="ui-item" role="menuitem" data-sub-trigger aria-haspopup="menu" aria-expanded="false">
+                  <span>書き出し</span>
+                  <span class="ui-flyout__chevron" aria-hidden="true">▸</span>
+                </button>
+                <div class="ui-flyout__subpanel">
+                  <div class="ui-flyout__surface" role="menu" aria-label="書き出し形式">
+                    <button type="button" class="ui-item" role="menuitem" data-demo-action="PDF 形式で書き出し">PDF 形式</button>
+                    <button type="button" class="ui-item" role="menuitem" data-demo-action="CSV 形式で書き出し">CSV 形式</button>
+                    <button type="button" class="ui-item" role="menuitem" data-demo-action="PNG 画像で書き出し">PNG 画像</button>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-flyout__branch">
+                <button type="button" class="ui-item" role="menuitem" data-sub-trigger aria-haspopup="menu" aria-expanded="false">
+                  <span>共有設定</span>
+                  <span class="ui-flyout__chevron" aria-hidden="true">▸</span>
+                </button>
+                <div class="ui-flyout__subpanel">
+                  <div class="ui-flyout__surface" role="menu" aria-label="共有設定">
+                    <button type="button" class="ui-item" role="menuitem" data-demo-action="閲覧リンクをコピー">閲覧リンクをコピー</button>
+                    <button type="button" class="ui-item" role="menuitem" data-demo-action="編集権限を付与">編集権限を付与</button>
+                  </div>
+                </div>
+              </div>
+              <hr class="ui-divider" />
+              <button type="button" class="ui-item ui-item--danger" role="menuitem" data-demo-action="ゴミ箱へ移動">ゴミ箱へ移動</button>
+            </div>
+          </div>
+        </div>
+        <span class="specimen__hint">「書き出し ▸」にホバーまたは → / ← キーで階層移動</span>
+      </div>
+
+      <div class="code-box" data-code-box="flyout">
+        <div class="code-box__bar">
+          <div class="code-tabs">
+            <button type="button" class="code-tab is-active" data-lang="html">HTML</button>
+            <button type="button" class="code-tab" data-lang="css">CSS</button>
+            <button type="button" class="code-tab" data-lang="js">JS</button>
+          </div>
+          <div class="code-actions">
+            <button type="button" class="code-toggle">コードを見る</button>
+            <button type="button" class="copy-btn">コピー</button>
+          </div>
+        </div>
+        <pre class="code-box__body"><code></code></pre>
+      </div>
+    </section>
+
+    <!-- 04. Popover -->
+    <section id="popover" class="specimen" aria-labelledby="popover-heading">
+      <div class="specimen__header">
+        <div>
+          <div class="specimen__meta">
+            <span class="specimen__index">04</span>
+            <h2 id="popover-heading" class="specimen__title">ポップオーバー</h2>
+            <span class="specimen__en">Popover</span>
+          </div>
+          <p class="specimen__desc">単なる選択肢リストではなく、説明文・価格・CTAボタンなど自由なカード内容を浮かせて表示します。</p>
+        </div>
+        <div class="specimen__controls">
+          <label class="pin-label">
+            <input type="checkbox" data-pin-target="demo-popover" />
+            開いたまま固定
+          </label>
+        </div>
+      </div>
+
+      <div class="specimen__stage">
+        <div id="demo-popover" class="ui-popover ui-menu-root" data-menu-root>
+          <button type="button" class="ui-btn" data-menu-trigger aria-haspopup="dialog" aria-expanded="false">
+            プラン詳細を見る
+          </button>
+          <div class="ui-popover__panel" role="dialog" aria-label="Proプランの詳細">
+            <div class="ui-popover__surface">
+              <div class="ui-popover__head">
+                <h3 class="ui-popover__title">Pro プラン</h3>
+                <span class="ui-popover__price">¥980 / 月</span>
+              </div>
+              <p class="ui-popover__body">
+                チーム共有・履歴無制限・優先サポートがすべて含まれます。14日間は無料でお試しいただけます。
+              </p>
+              <div class="ui-popover__actions">
+                <button type="button" class="ui-btn ui-btn--sm" data-demo-action="Proプランを無料で試す">無料で試す</button>
+                <button type="button" class="ui-btn ui-btn--ghost ui-btn--sm" data-demo-action="プラン比較表を開く">比較表</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="specimen__hint">ホバー・クリックで表示、Escキーで閉じる</span>
+      </div>
+
+      <div class="code-box" data-code-box="popover">
+        <div class="code-box__bar">
+          <div class="code-tabs">
+            <button type="button" class="code-tab is-active" data-lang="html">HTML</button>
+            <button type="button" class="code-tab" data-lang="css">CSS</button>
+            <button type="button" class="code-tab" data-lang="js">JS</button>
+          </div>
+          <div class="code-actions">
+            <button type="button" class="code-toggle">コードを見る</button>
+            <button type="button" class="copy-btn">コピー</button>
+          </div>
+        </div>
+        <pre class="code-box__body"><code></code></pre>
+      </div>
+    </section>
+
+    <!-- 05. Speed Dial -->
+    <section id="speeddial" class="specimen" aria-labelledby="speeddial-heading">
+      <div class="specimen__header">
+        <div>
+          <div class="specimen__meta">
+            <span class="specimen__index">05</span>
+            <h2 id="speeddial-heading" class="specimen__title">スピードダイアル</h2>
+            <span class="specimen__en">Speed Dial</span>
+          </div>
+          <p class="specimen__desc">画面右下の丸いボタン（FAB）から、複数のショートカットアクションを時間差アニメーションで展開します。</p>
+        </div>
+        <div class="specimen__controls">
+          <label class="pin-label">
+            <input type="checkbox" data-pin-target="demo-speeddial" />
+            開いたまま固定
+          </label>
+        </div>
+      </div>
+
+      <div class="specimen__stage specimen__stage--corner">
+        <div id="demo-speeddial" class="ui-speeddial ui-menu-root" data-menu-root>
+          <div class="ui-speeddial__actions" role="menu" aria-label="クイックアクション">
+            <button type="button" class="ui-speeddial__item" role="menuitem" data-demo-action="メモを作成">
+              <span class="ui-speeddial__label">メモを作成</span>
+              <span class="ui-speeddial__mini" aria-hidden="true">✎</span>
+            </button>
+            <button type="button" class="ui-speeddial__item" role="menuitem" data-demo-action="画像を添付">
+              <span class="ui-speeddial__label">画像を添付</span>
+              <span class="ui-speeddial__mini" aria-hidden="true">🖼</span>
+            </button>
+            <button type="button" class="ui-speeddial__item" role="menuitem" data-demo-action="リンクを共有">
+              <span class="ui-speeddial__label">リンクを共有</span>
+              <span class="ui-speeddial__mini" aria-hidden="true">↗</span>
+            </button>
+          </div>
+          <button type="button" class="ui-speeddial__fab" data-menu-trigger aria-haspopup="menu" aria-expanded="false" aria-label="クイックアクションを展開">
+            <span class="ui-speeddial__plus" aria-hidden="true">+</span>
+          </button>
+        </div>
+        <span class="specimen__hint">右下の「＋」ボタンにホバーまたはクリック</span>
+      </div>
+
+      <div class="code-box" data-code-box="speeddial">
+        <div class="code-box__bar">
+          <div class="code-tabs">
+            <button type="button" class="code-tab is-active" data-lang="html">HTML</button>
+            <button type="button" class="code-tab" data-lang="css">CSS</button>
+            <button type="button" class="code-tab" data-lang="js">JS</button>
+          </div>
+          <div class="code-actions">
+            <button type="button" class="code-toggle">コードを見る</button>
+            <button type="button" class="copy-btn">コピー</button>
+          </div>
+        </div>
+        <pre class="code-box__body"><code></code></pre>
+      </div>
+    </section>
+
+    <!-- Accessibility Summary -->
+    <section class="a11y-card" aria-labelledby="a11y-heading">
+      <h2 id="a11y-heading">実装・アクセシビリティ設計のポイント</h2>
+      <div class="a11y-grid">
+        <div class="a11y-item">
+          <h3>ホバーブリッジ &amp; 遅延クローズ</h3>
+          <p>トリガーとパネルの隙間を透明な padding で埋め、カーソル離脱時も 120ms の猶予を持たせることで誤クローズを防いでいます。</p>
+        </div>
+        <div class="a11y-item">
+          <h3>キーボード &amp; ARIA 同期</h3>
+          <p><code>aria-expanded</code> と <code>aria-haspopup</code> を自動更新し、↑↓ / Home / End / →← / Escape キーでの移動と終了に対応しています。</p>
+        </div>
+        <div class="a11y-item">
+          <h3>タッチ端末フォールバック</h3>
+          <p><code>pointerType === "touch"</code> ではホバー発火を抑止し、タップによる開閉と外側タップでの閉じる挙動に切り替わります。</p>
+        </div>
+        <div class="a11y-item">
+          <h3>動きの軽減への配慮</h3>
+          <p>OS設定の <code>prefers-reduced-motion: reduce</code> を検知し、アニメーションを自動的に無効化します。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>UI Expo — Vanilla HTML / CSS / JavaScript</span>
+    <span>MIT License</span>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="./scripts/patterns.js"></script>
+  <script src="./scripts/showcase.js"></script>
+</body>
+</html>
